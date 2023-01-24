@@ -83,4 +83,4 @@ load_data(plik)
 load_file(path, header=False, start=0, stop=10)
 # 3. dzielimy dataset na cześć treningową i testową:
 
-split_dataset(path,70,0,20)  
+split_dataset(path,80,0,20)  
