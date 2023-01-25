@@ -70,7 +70,25 @@ def split_dataset(dataset, train_percent, val_percent, test_percent):
     print('zbiór testowy:')
     print(test_size)
     return train_set, val_set, test_set
-    
+
+ #Funcka zliczająca klasy i liczbę jej wystąpień:
+ # ---------------------------------------------- 
+def classum(path):
+    import csv
+    from collections import defaultdict
+    class_counts = defaultdict(int)
+
+    print('\n(Klasy, Ich_liczebność)\n')
+
+    with open(path, "r") as f:
+        reader = csv.reader(f)
+        for row in filter(lambda row: row, reader):
+            class_counts[row[-1]] += 1
+
+    for cls, count in class_counts.items():
+        print((cls, count))
+
+      
      
 #-----------------Przykad użycia---------------------------------------------------
 #----------------------------------------------------------------------------------
@@ -82,5 +100,6 @@ load_data(plik)
 # 2.  ładujemy dane z etykietami lub bez
 load_file(path, header=False, start=0, stop=10)
 # 3. dzielimy dataset na cześć treningową i testową:
-
 split_dataset(path,80,0,20)  
+# 4. zliczamy klasy i liczbę wystąpień:
+classum(path)
