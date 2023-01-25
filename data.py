@@ -71,7 +71,7 @@ def split_dataset(dataset, train_percent, val_percent, test_percent):
     print(test_size)
     return train_set, val_set, test_set
 
- #Funcka zliczająca klasy i liczbę jej wystąpień:
+ #Funkcja zliczająca klasy i liczbę jej wystąpień:
  # ---------------------------------------------- 
 def classum(path):
     import csv
