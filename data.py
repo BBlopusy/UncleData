@@ -73,7 +73,7 @@ def split_dataset(dataset, train_percent, val_percent, test_percent):
 
  #Funkcja zliczająca klasy i liczbę jej wystąpień:
  # ---------------------------------------------- 
-def classum(path):
+def class_sum(path):
     import csv
     from collections import defaultdict
     class_counts = defaultdict(int)
@@ -88,8 +88,19 @@ def classum(path):
     for cls, count in class_counts.items():
         print((cls, count))
 
-      
-     
+# Funkcja wypisuje dane dla podanej wartości klasy decyzyjnej 
+#  wypisuje wiersze z zadaną wartością klasy decyzyjnej
+#-----------------------------------------------------------
+def class_name(path='zmodyfikowany.csv', name='Iris-virginica'):
+    import csv
+    class_value = name
+    print(f'\n{name}:\n')
+    with open(path, 'r') as f:
+        reader = csv.reader(f)
+        for row in filter(lambda x: x, reader):
+            if row[-1] == class_value:
+                print(row)
+          
 #-----------------Przykad użycia---------------------------------------------------
 #----------------------------------------------------------------------------------
 
@@ -102,4 +113,6 @@ load_file(path, header=False, start=0, stop=10)
 # 3. dzielimy dataset na cześć treningową i testową:
 split_dataset(path,80,0,20)  
 # 4. zliczamy klasy i liczbę wystąpień:
-classum(path)
+class_sum(path)
+# 5. wypisuje wiersze z podaną nazwą wierszy:
+class_name(name='Iris-versicolor')
