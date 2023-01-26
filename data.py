@@ -9,7 +9,7 @@ def load_data(plik):
 #Funkcja która już pracuje na plik.csv i wczytuje dane całe lub podzielone(start,stop):
 #-----------------------------------------------------
 
-def load_file(path, header=False,start=None,stop=None ):    
+def load_file(path, header=False,start=None,stop=None, save=False, bundle='new.csv' ):    
     
     import csv
     path = path
@@ -30,14 +30,20 @@ def load_file(path, header=False,start=None,stop=None ):
         print('DATASET:')
         start = start
         stop = stop
-        for i,row in enumerate(csvreader):
-            if(start is None or int(start)<= i) and(stop is None or i < int(stop)):
-                print(row)
-        csvfile.close()  
+        if save is True:
+            with open(bundle, 'a+') as out_file:
+                for i,row in enumerate(csvreader):
+                    if(start is None or int(start)<= i) and(stop is None or i < int(stop)):
+                        print(row,file=out_file)
+        else:
+            for i,row in enumerate(csvreader):
+                    if(start is None or int(start)<= i) and(stop is None or i < int(stop)):
+                        print(row)
+            csvfile.close()  
 
 #Funkcja która dzieli dataset na część treningową, testową i walidacyjną
 #-----------------------------------------------------------------------
-def split_dataset(dataset, train_percent, val_percent, test_percent):
+def split_dataset(dataset, train_percent, val_percent, test_percent, save=False, bundle='new.csv'):
     def load_csv(path):
         import csv 
         with open(path, 'r') as csvfile:
@@ -69,8 +75,14 @@ def split_dataset(dataset, train_percent, val_percent, test_percent):
     print(val_size)
     print('Zbiór testowy:')
     print(test_size)
-    return train_set, val_set, test_set
-
+    
+    if save is True:
+        with open(bundle, 'a+') as out_file:
+            print(train_set, file=out_file)
+            print(val_set, file=out_file)
+            print(test_set, file=out_file)
+    
+            return train_set, val_set, test_set
  #Funkcja zliczająca klasy i liczbę jej wystąpień:
  # ---------------------------------------------- 
 def class_sum(path, save=False, bundle='new.csv'):
@@ -122,7 +134,7 @@ load_file(path, header=False, start=0, stop=10)
 # 3. dzielimy dataset na cześć treningową i testową:
 split_dataset(path,80,0,20)  
 # 4. zliczamy klasy i liczbę wystąpień :
-class_sum(path, save=True)
+class_sum(path)
 # 5. wypisuje wiersze z podaną nazwą wierszy:
 class_name(name='Iris-versicolor')
 # 6. (można również wyniki zapisywać do pliku podając parametry funkcji:save=True, bundle='name.csv')
