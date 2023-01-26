@@ -63,11 +63,11 @@ def split_dataset(dataset, train_percent, val_percent, test_percent):
     test_set = dataset[train_size+val_size:]
     
     # zwracamy podzbiory jako tuple
-    print('\nzbiór treningowy:')
+    print('\nZbiór treningowy:')
     print(train_size)
-    print('zbiór walidacyjny:')
+    print('Zbiór walidacyjny:')
     print(val_size)
-    print('zbiór testowy:')
+    print('Zbiór testowy:')
     print(test_size)
     return train_set, val_set, test_set
 
