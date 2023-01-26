@@ -73,7 +73,7 @@ def split_dataset(dataset, train_percent, val_percent, test_percent):
 
  #Funkcja zliczająca klasy i liczbę jej wystąpień:
  # ---------------------------------------------- 
-def class_sum(path):
+def class_sum(path, save=False, bundle='new.csv'):
     import csv
     from collections import defaultdict
     class_counts = defaultdict(int)
@@ -86,12 +86,17 @@ def class_sum(path):
             class_counts[row[-1]] += 1
 
     for cls, count in class_counts.items():
-        print((cls, count))
+        if save is True:
+            with open(bundle, 'a+') as out_file:
+                print((cls,count), file=out_file)
+        else: 
+            print((cls, count))
+        
 
 # Funkcja wypisuje dane dla podanej wartości klasy decyzyjnej 
 #  wypisuje wiersze z zadaną wartością klasy decyzyjnej
 #-----------------------------------------------------------
-def class_name(path='zmodyfikowany.csv', name='Iris-virginica'):
+def class_name(path='zmodyfikowany.csv', name='Iris-virginica', save=False, bundle='new.csv'):
     import csv
     class_value = name
     print(f'\n{name}:\n')
@@ -99,7 +104,11 @@ def class_name(path='zmodyfikowany.csv', name='Iris-virginica'):
         reader = csv.reader(f)
         for row in filter(lambda x: x, reader):
             if row[-1] == class_value:
-                print(row)
+                if save is True:
+                    with open(bundle, 'a+') as out_file:
+                        print(row, file=out_file)
+                else: 
+                    print(row)
           
 #-----------------Przykad użycia---------------------------------------------------
 #----------------------------------------------------------------------------------
@@ -112,7 +121,8 @@ load_data(plik)
 load_file(path, header=False, start=0, stop=10)
 # 3. dzielimy dataset na cześć treningową i testową:
 split_dataset(path,80,0,20)  
-# 4. zliczamy klasy i liczbę wystąpień:
-class_sum(path)
+# 4. zliczamy klasy i liczbę wystąpień :
+class_sum(path, save=True)
 # 5. wypisuje wiersze z podaną nazwą wierszy:
 class_name(name='Iris-versicolor')
+# 6. (można również wyniki zapisywać do pliku podając parametry funkcji:save=True, bundle='name.csv')
